@@ -86,6 +86,7 @@ git remote rename origin old-origin
 git remote add origin git@github.com:<your-gitlab-username>/mp1.git
 # run `git remote -v` to check your origin 
 ```
+3. Work on your MP code and satisfy all the grading [requirements](#Requirements)
 ### Deploy your code
 In order for us to view and grade your MP, you will be deploying your webpage with GitHub's pipelines. This should happen automatically after pushing to your repository, through Github Actions deployment pipeline.
 
