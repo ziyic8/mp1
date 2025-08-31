@@ -1,5 +1,5 @@
 # MP #1: One Web Page To Rule Them All
-### Due: October 01, 11.59PM CDT
+### Due: September 23, 11.59PM CDT
 
 ## Table of Contents
 1. [Assignment](#assignment)
@@ -69,7 +69,7 @@ Your webpage will have to implement the features listed below. Note that the exa
 
 ## Getting Started
 1. Clone the repository:
-`git clone https://gitlab.com/uiuc-web-programming/mp1.git mp1`, then `cd mp1`
+`git clone git@github.com:cs409-fa25/mp1.git mp1`, then `cd mp1`
 2. Install dependencies:
 `npm install`
 3. Start the dev server:
@@ -77,21 +77,29 @@ Your webpage will have to implement the features listed below. Note that the exa
 4. Open a browser and go to `http://localhost:8080/` to view your page. You should see "Hello World! Welcome to MP1!" at the top of the screen. Note that if for some reason your port 8080 is occupied, it will default to 8081.
 
 ## Submission Details
+### Set up your Repo
 Here's what you will need to submit:
-1. Create a private repository on GitLab. Make sure "Initialize this repository with a README" is not checked.
+1. [Create a public repository on GitHub.](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) Make sure "Initialize this repository with a README" is **not** checked.
 2. Change the remote url for the mp1 directory to the url of the new private repository you created.
 ```
 git remote rename origin old-origin
-git remote add origin git@gitlab.com:<your-gitlab-username>/mp1.git
+git remote add origin git@github.com:<your-gitlab-username>/mp1.git
+# run `git remote -v` to check your origin 
 ```
-3. Commit and push your local changes to this new repository.
-4. `.gitlab-ci.yml` file automatically makes a Gitlab CI pipeline run to deploy your code. After the pipeline finishes, your site should be live at `https://<your-gitlab-username>.gitlab.io/mp1`. **It may take up to 10-30 minutes for the site to go live after the first deployment.**
-5. Invite `uiucwp` as a collaborator. This should be as a **reporter**, not as a *guest*, otherwise we can't see your code.
-6. Make a video (3 minutes max) demo-ing your deployed website and upload it to Google Drive. Share it with `uiuc.web.programming@gmail.com` and put the share link in the google form.
+### Deploy your code
+In order for us to view and grade your MP, you will be deploying your webpage with GitHub's pipelines. This should happen automatically after pushing to your repository, through Github Actions deployment pipeline.
+
+You will need to do some additional to properly deploy the website. There are a few settings you will need to change in your GitHub repository.
+1. Set GitHub Pages Deployment Source to Github Actions
+   - In your Github repo, go to Settings > Pages > Build and Deployment > Source > Select "GitHub Actions"
+`.github/workflows/static.yml` file automatically makes a GitHub CI pipeline run to build and deploy your code as a website. After the pipeline finishes, your site should be live at `https://<your-github-username>.github.io/mp0`. **It may take up to 10-30 minutes for the site to go live after the first deployment.**
+
+### Submit Video & Fill Form
+1. Make a video (3 minutes max) demo-ing your deployed website and upload it to Google Drive. Share it with `uiuc.web.programming@gmail.com` and put the share link in the google form.
   - Show the url to prove you are on your deployed website. Then show all the requirement features you fulfilled in your mp.
   - If you were unable to deploy your website, you can demo your mp locally for some point deduction (hard capped at 80%)
     - Just make sure you do `git status` and `git log` first so we can see your last edits.
-7. Fill out and submit the form [here](https://forms.gle/VAByoP9C6ng3oTbs5)
+2. Fill out and submit the form [here](https://forms.gle/Xyr7YhBBLdafny3H6)
 
 ## Large Language Model Usage Policy
 
