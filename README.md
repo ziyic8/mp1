@@ -11,11 +11,11 @@
 
 ## Assignment
 
-#### Task
+### Task
 
 In this programming assignment, you will design and implement a single-page website with specified functionality and formatting using only HTML, SCSS, and Javascript. The content of the website is up to you. For example, the subject can be a company/organization, a product, or a personal/portfolio page. This assignment will give you first-hand experience with HTML5 (e.g. header, canvas, video), CSS3/SASS (e.g. use of webfonts, animations, layout), and Javascript(ES5 or ES6).
 
-#### Requirements
+### Requirements
 
 Your webpage will have to implement the features listed below. Note that the examples are only meant to illustrate the features. You do not have to make your webpage look similar to the examples. You just have to incorporate that feature in some form.
 
@@ -68,34 +68,33 @@ Your webpage will have to implement the features listed below. Note that the exa
 8. You must utilize some SCSS features (variables, mixins, etc). A plain CSS file will receive less points.
 
 ## Getting Started
+### Clone Class Repo
 1. Clone the repository:
 `git clone git@github.com:cs409-fa25/mp1.git mp1`, then `cd mp1`
-2. Install dependencies:
-`npm install`
-3. Start the dev server:
-`npm start`
-4. Open a browser and go to `http://localhost:8080/` to view your page. You should see "Hello World! Welcome to MP1!" at the top of the screen. Note that if for some reason your port 8080 is occupied, it will default to 8081.
-
-## Submission Details
-### Set up your Repo
-Here's what you will need to submit:
-1. [Create a public repository on GitHub.](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) Make sure "Initialize this repository with a README" is **not** checked.
-2. Change the remote url for the mp1 directory to the url of the new private repository you created.
+2. [Create a public repository on GitHub.](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) Make sure "Initialize this repository with a README" is **not** checked.
+3. Change the remote url for the mp1 directory to the url of the new private repository you created.
 ```
 git remote rename origin old-origin
 git remote add origin git@github.com:<your-gitlab-username>/mp1.git
 # run `git remote -v` to check your origin 
 ```
-3. Work on your MP code and satisfy all the grading [requirements](#Requirements)
+4. Install dependencies:
+`npm install`
+5. Start the dev server:
+`npm start`
+6. Open a browser and go to `http://localhost:8080/` to view your page. You should see "Hello World! Welcome to MP1!" at the top of the screen. Note that if for some reason your port 8080 is occupied, it will default to 8081.
+7. Work on your MP code and satisfy all the grading [requirements](#Requirements)
+
 ### Deploy your code
 In order for us to view and grade your MP, you will be deploying your webpage with GitHub's pipelines. This should happen automatically after pushing to your repository, through Github Actions deployment pipeline.
 
-You will need to do some additional to properly deploy the website. There are a few settings you will need to change in your GitHub repository.
+You will need to do some additional work to properly deploy the website. There are a few settings you will need to change in your GitHub repository.
 1. Set GitHub Pages Deployment Source to Github Actions
    - In your Github repo, go to Settings > Pages > Build and Deployment > Source > Select "GitHub Actions"
 `.github/workflows/static.yml` file automatically makes a GitHub CI pipeline run to build and deploy your code as a website. After the pipeline finishes, your site should be live at `https://<your-github-username>.github.io/mp0`. **It may take up to 10-30 minutes for the site to go live after the first deployment.**
 
-### Submit Video & Fill Form
+## Submission Details
+
 1. Make a video (3 minutes max) demo-ing your deployed website and upload it to Google Drive. Share it with `uiuc.web.programming@gmail.com` and put the share link in the google form.
   - Show the url to prove you are on your deployed website. Then show all the requirement features you fulfilled in your mp.
   - If you were unable to deploy your website, you can demo your mp locally for some point deduction (hard capped at 80%)
