@@ -6,28 +6,13 @@ module.exports = {
   mode: "development",
   devtool: "source-map",
   devServer: {
-    static: { directory: path.resolve(__dirname, 'dist') },
+    static: { directory: path.resolve(__dirname, 'build') },
     open: true,
     host: "localhost",
     watchFiles: 'index.html',
   },
-  entry: "./index.js",
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, "dist"),
-  },
   context: path.join(__dirname, 'src'),
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: './assets/', to: './assets/' },
-      ],
-    }),
-    new HtmlWebpackPlugin({
-      template: "index.html",
-      inject: 'body',
-    }),
-  ],
+  entry: "./index.js",
   module: {
     rules: [
       {
@@ -47,5 +32,20 @@ module.exports = {
         loader: "html-loader",
       },
     ],
+  },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: './assets/', to: './assets/' },
+      ],
+    }),
+    new HtmlWebpackPlugin({
+      template: "index.html",
+      inject: 'body',
+    }),
+  ],
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, "build"),
   },
 };
