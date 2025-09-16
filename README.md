@@ -91,7 +91,7 @@ In order for us to view and grade your MP, you will be deploying your webpage wi
 You will need to do some additional work to properly deploy the website. There are a few settings you will need to change in your GitHub repository.
 1. Set GitHub Pages Deployment Source to Github Actions
    - In your Github repo, go to Settings > Pages > Build and Deployment > Source > Select "GitHub Actions"
-`.github/workflows/static.yml` file automatically makes a GitHub CI pipeline run to build and deploy your code as a website. After the pipeline finishes, your site should be live at `https://<your-github-username>.github.io/mp0`. **It may take up to 10-30 minutes for the site to go live after the first deployment.**
+`.github/workflows/static.yml` file automatically makes a GitHub CI pipeline run to build and deploy your code as a website. After the pipeline finishes, your site should be live at `https://<your-github-username>.github.io/mp1`. **It may take up to 10-30 minutes for the site to go live after the first deployment.**
 
 ## Submission Details
 
