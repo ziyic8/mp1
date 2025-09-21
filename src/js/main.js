@@ -430,7 +430,7 @@ function animateCountersOnScroll() {
         counters.forEach(counter => {
             const targetText = counter.textContent;
             const target = parseFloat(targetText.replace(/[^\d.]/g, ''));
-            const duration = 2000; // Animation duration in milliseconds
+            const duration = 800; // Animation duration in milliseconds
             const increment = target / (duration / 16); // 60 FPS
             let current = 0;
             
@@ -534,14 +534,10 @@ function showNotification(message, type = 'info') {
  * @returns {boolean} - True if element is in viewport
  */
 function isElementInViewport(el) {
-    if (!el) return false;
-    
     const rect = el.getBoundingClientRect();
     return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        rect.top < window.innerHeight && 
+        rect.bottom > 0
     );
 }
 
