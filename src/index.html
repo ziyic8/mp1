@@ -1,13 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>MP1</title>
-    </head>
-    <body>
-        <h1>Hello World! Welcome to MP1!</h1>
-        <img src="assets/image.jpg">
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziyi Chen | AI Researcher & MSIM Student</title>
+    <link rel="icon" type="image/png" href="assets/web-icon.png">
+    <link rel="stylesheet" href="css/main.scss">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">Ziyi Chen</a>
+            </div>
+            
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#hobbies" class="nav-link">Hobbies</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Section with Video Background -->
+    <section id="home" class="section home-section video-background-section">
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="assets/bgvideo.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img src="assets/image1.jpg" alt="Ziyi Chen" class="profile-image animate-fade-in">
+                </div>
+                <h1 class="hero-title animate-slide-up">Hi, I'm Ziyi Chen</h1>
+                <p class="hero-subtitle animate-slide-up">AI Researcher & MSIM Student</p>
+                <p class="hero-description animate-slide-up">PhD-bound researcher focusing on uncertainty quantification, multimodal AI, and machine learning with 4+ publications in progress</p>
+                <div class="hero-buttons animate-bounce">
+                    <a class="cta-button primary" href="#projects">
+                        View Projects <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section with Fixed Background -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Me</h2>
+                <p>Get to know more about my research journey and aspirations</p>
+            </div>
+            <div class="about-content">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h3>My Journey</h3>
+                        <p>I'm currently a Master of Science in Information Management (MSIM) student at the University of Illinois at Urbana-Champaign, maintaining a perfect 4.0/4.0 GPA. My research focuses on uncertainty quantification for vision-language models, multimodal AI benchmarking, and advanced machine learning techniques.</p>
+                        <p>With a strong foundation from my undergraduate studies where I graduated as the top student (1/60) from Beijing University of Technology, I'm passionate about cutting-edge AI research. I have 4+ publications in progress and collaborate with leading researchers on projects spanning computer vision, natural language processing, and ensemble learning methods. I'm proficient in Python, PyTorch, TensorFlow, and various ML frameworks, with extensive experience in data analysis and statistical modeling.</p>
+                        
+                        <div class="tech-stack">
+                            <h4>Languages & Tools</h4>
+                            <div class="tech-icons">
+                                <span class="tech-icon python">Python</span>
+                                <span class="tech-icon pytorch">PyTorch</span>
+                                <span class="tech-icon tensorflow">TensorFlow</span>
+                                <span class="tech-icon javascript">JavaScript</span>
+                                <span class="tech-icon react">React</span>
+                                <span class="tech-icon node">Node.js</span>
+                                <span class="tech-icon sql">SQL</span>
+                                <span class="tech-icon mongodb">MongoDB</span>
+                                <span class="tech-icon git">Git</span>
+                                <span class="tech-icon docker">Docker</span>
+                                <span class="tech-icon aws">AWS</span>
+                                <span class="tech-icon linux">Linux</span>
+                            </div>
+                        </div>
+
+                        <div class="about-social">
+                            <h4>Connect With Me</h4>
+                            <div class="social-icons">
+                                <a href="mailto:ziyic8@illinois.edu" class="social-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Email</span>
+                                </a>
+                                <a href="https://github.com/ziyic8/" class="social-icon">
+                                    <i class="fab fa-github"></i>
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-star"></i>
+                            <span class="stat-number">4.0</span>
+                            <span class="stat-label">Current GPA</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <span class="stat-number">6+</span>
+                            <span class="stat-label">Research Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="stat-number">4+</span>
+                            <span class="stat-label">Publications</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-award"></i>
+                            <span class="stat-number">5+</span>
+                            <span class="stat-label">Academic Awards</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hobbies & Interests Section with Video -->
+    <section id="hobbies" class="section hobbies-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Beyond Research</h2>
+                <p>My hobbies and interests that keep me balanced and inspired</p>
+            </div>
+            <div class="hobbies-content">
+                <!-- Update existing hobbies-grid section -->
+                <div class="hobbies-grid">
+                    <div class="hobby-card" onclick="openModal('anime-modal')">
+                        <div class="hobby-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <h4>Anime & Manga</h4>
+                        <p>Huge Haikyuu fan - I've collected the entire manga series and love Hinata and Kageyama's journey from rivals to partners...</p>
+                        <div class="card-overlay">
+                            <span>Click for details</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hobby-card" onclick="openModal('fitness-modal')">
+                        <div class="hobby-icon">
+                            <i class="fas fa-bicycle"></i>
+                        </div>
+                        <h4>Cycling</h4>
+                        <p>Recently got my first carbon fiber bike for exploring the city and countryside. Great stress reliever that helps me tackle complex problems.</p>
+                        <div class="card-overlay">
+                            <span>Click for details</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hobby-card" onclick="openModal('photography-modal')">
+                        <div class="hobby-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h4>Photography & Travel</h4>
+                        <p>I love capturing spontaneous everyday moments that others might miss. So far explored 30% of China and now discovering the US...</p>
+                        <div class="card-overlay">
+                            <span>Click for details</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hobby-card" onclick="openModal('cooking-modal')">
+                        <div class="hobby-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h4>Cooking & Baking</h4>
+                        <p>Learning to bake and experimenting with healthy recipes that actually taste good. It's become my way to decompress after long coding sessions...</p>
+                        <div class="card-overlay">
+                            <span>Click for details</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section education-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Education</h2>
+                <p>My academic journey and achievements</p>
+            </div>
+            <div class="education-content">
+                <div class="education-wrapper">
+                    <!-- Current - UIUC -->
+                    <div class="edu-item current-degree">
+                        <div class="edu-logo">
+                            <img src="assets/logo-UIUC.png" alt="UIUC Logo">
+                        </div>
+                        <div class="edu-info">
+                            <h3>Master of Science in Information Management</h3>
+                            <h4>University of Illinois at Urbana-Champaign</h4>
+                            <p class="edu-duration">Sep 2024 - May 2026 (Expected)</p>
+                            <p class="edu-gpa">Current GPA: 4.0/4.0</p>
+                            
+                            <div class="edu-details">
+                                <div class="detail-section">
+                                    <h5>Relevant Coursework</h5>
+                                    <p>Data Mining (4.0/4.0), Applied Machine Learning (4.0/4.0), Data & Statistics (4.0/4.0), Linear Algebra (4.0/4.0), Data Structures (4.0/4.0)</p>
+                                </div>
+                                <div class="detail-section">
+                                    <h5>Current Achievements</h5>
+                                    <p>Perfect 4.0/4.0 GPA, Research Assistant - Multiple Projects, Advanced graduate program in Data Science, Focus on AI and Machine Learning</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Past - BJUT -->
+                    <div class="edu-item completed-degree">
+                        <div class="edu-logo">
+                            <img src="assets/logo-BJUT.png" alt="BJUT Logo">
+                        </div>
+                        <div class="edu-info">
+                            <h3>Bachelor of Management in Information Management</h3>
+                            <h4>Beijing University of Technology</h4>
+                            <p class="edu-duration">Sep 2018 - Jul 2022</p>
+                            <p class="edu-gpa">GPA: 4.0/4.0 | Rank: 1/60</p>
+                            
+                            <div class="edu-details">
+                                <div class="detail-section">
+                                    <h5>Academic Honors</h5>
+                                    <p>Outstanding Graduate (Top 1%), National Scholarship (Top 0.2%), First Prize Scholarship (3 years), Research Excellence Award, Academic Merit Recognition</p>
+                                </div>
+                                <div class="detail-section">
+                                    <h5>Foundation Built</h5>
+                                    <p>Information Management Systems, Data Analysis and Statistics, Research Methodologies, Database Design and Management, Programming and Algorithm Design</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Projects</h2>
+                <p>My technical projects and development experience</p>
+            </div>
+        
+            <!-- Tech Projects -->
+            <div class="tech-projects">
+                <div class="projects-carousel-container">
+                    <div class="projects-carousel" id="projects-carousel">
+                        <div class="projects-slide active">
+                            <div class="project-card">
+                                <div class="project-header">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <h4>Amazon Full-Stack Clone</h4>
+                                </div>
+                                <p>Developed a full-stack Amazon clone with complete e-commerce functionality including user authentication, product catalog, shopping cart, payment integration, and real-time order tracking.</p>
+                                <div class="project-tags">
+                                    <span class="tag">React.js</span>
+                                    <span class="tag">Express.js</span>
+                                    <span class="tag">Firebase</span>
+                                    <span class="tag">Stripe API</span>
+                                </div>
+                                <div class="project-features">
+                                    <span><i class="fas fa-check"></i> Payment Integration</span>
+                                    <span><i class="fas fa-check"></i> Real-time Database</span>
+                                    <span><i class="fas fa-check"></i> Responsive Design</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="projects-slide">
+                            <div class="project-card">
+                                <div class="project-header">
+                                    <i class="fas fa-robot"></i>
+                                    <h4>Multimodal RAG System</h4>
+                                </div>
+                                <p>Built an advanced RAG system using Qwen2.5VL for PDF question-answering, featuring multimodal embedding, late interaction similarity, and fine-tuned SFT on pdfvqa/chartQA datasets with automated evaluation.</p>
+                                <div class="project-tags">
+                                    <span class="tag">Python</span>
+                                    <span class="tag">Qwen2.5VL</span>
+                                    <span class="tag">RAG</span>
+                                    <span class="tag">DeepSeek-Chat</span>
+                                </div>
+                                <div class="project-features">
+                                    <span><i class="fas fa-check"></i> Multimodal Retrieval</span>
+                                    <span><i class="fas fa-check"></i> Dynamic Resolution</span>
+                                    <span><i class="fas fa-check"></i> Automated Evaluation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="projects-carousel-btn prev" onclick="changeProjectSlide(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="projects-carousel-btn next" onclick="changeProjectSlide(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    
+                    <div class="projects-carousel-dots">
+                        <span class="dot active" onclick="currentProjectSlide(1)"></span>
+                        <span class="dot" onclick="currentProjectSlide(2)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>I'm here to collaborate and create something amazing together. Feel free to reach out!
+                </p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>ziyic8@illinois.edu</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <div>
+                            <h4>GitHub</h4>
+                            <p>github.com/ziyic8</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Ziyi Chen. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="mailto:ziyic8@illinois.edu"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/ziyic8/"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- About Modal -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('about-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>About Ziyi Chen</h2>
+            </div>
+            <div class="modal-body">
+                <p>I'm a dedicated MSIM student with a perfect 4.0 GPA and a passion for transforming cutting-edge AI research into practical applications. My work focuses on uncertainty quantification, multimodal AI, and advanced machine learning techniques.</p>
+                <p>With 4+ publications in progress and extensive research experience, I bridge the gap between theoretical computer science and real-world AI applications, particularly in vision-language models and ensemble learning methods.</p>
+                <div class="modal-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Strong Academic Record</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Diverse Technical Skills</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Research Leadership Experience</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>AI Research Expertise</span>
+                    </div>
+                </div>
+                <button class="modal-btn" onclick="closeModal('about-modal')">Explore More</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Hobby Modals -->
+    <!-- Anime & Manga Modal -->
+    <div id="anime-modal" class="modal hobby-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('anime-modal')">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-tv"></i>
+                <h2>Anime & Manga</h2>
+                <p>My passion for Japanese animation and comics</p>
+            </div>
+            <div class="modal-body">
+                <div class="hobby-detail-grid">
+                    <div class="detail-section">
+                        <h3><i class="fas fa-heart"></i> Haikyuu Collection</h3>
+                        <div class="image-gallery">
+                            <img src="assets/haikyuu1.png" alt="Haikyuu Collection 1">
+                            <img src="assets/haikyuu2.png" alt="Haikyuu Collection 2">
+                        </div>
+                        <p>I've collected the entire Haikyuu manga series. The story of determination and teamwork really resonates with me during challenging research phases.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3><i class="fas fa-users"></i> Character Growth Journey</h3>
+                        <div class="video-container">
+                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/kOQIWza3KrA" 
+                                    title="Haikyuu 10th Anniversary PV" frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen></iframe>
+                        </div>
+                        <p>Hinata and Kageyama's evolution from rivals to partners perfectly captures the spirit of growth and collaboration that inspires me in my own research journey.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3><i class="fas fa-list"></i> Favorite Series</h3>
+                        <div class="anime-list">
+                            <div><strong>• Action/Shounen:</strong> Naruto, Demon Slayer, Attack on Titan</div>
+                            <div><strong>• Mystery/Detective:</strong> Detective Conan (following weekly), Kindaichi Case Files</div>
+                            <div><strong>• Classics:</strong> Spirited Away, Your Name, Castle in the Sky</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cycling Modal -->
+    <div id="fitness-modal" class="modal hobby-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('fitness-modal')">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-bicycle"></i>
+                <h2>Cycling</h2>
+                <p>Exploring the world on two wheels</p>
+            </div>
+            <div class="modal-body">
+                <div class="hobby-detail-grid">
+                    <div class="detail-section">
+                        <h3><i class="fas fa-bicycle"></i> Bike Configuration</h3>
+                        <div class="bike-info">
+                            <img src="assets/bike.png" alt="My Bike">
+                            <div class="bike-specs">
+                                <div><strong>• Frame:</strong> UCC Shockwave</div>
+                                <div><strong>• Handlebar:</strong> Dashi Gen 2 Integrated</div>
+                                <div><strong>• Groupset:</strong> Shimano 7120 Full Set</div>
+                                <div><strong>• Saddle:</strong> Prologo M5 Carbon Rail</div>
+                                <div><strong>• Wheelset:</strong> Superteam Pro+</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3><i class="fas fa-map"></i> Favorite Cycling Routes in Beijing</h3>
+                        <div class="route-list">
+                            <div class="route-item"><strong>Mentougou – Jietai Temple:</strong> A classic climb with peaceful mountain scenery</div>
+                            <div class="route-item"><strong>Shougang Bridge & Chang'an Avenue:</strong> Urban route featuring modern landmarks and wide cycling lanes</div>
+                            <div class="route-item"><strong>Still Exploring:</strong> Many more hidden routes around Beijing waiting to be discovered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photography & Travel Modal -->
+    <div id="photography-modal" class="modal hobby-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('photography-modal')">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-camera"></i>
+                <h2>Photography & Travel</h2>
+                <p>Capturing moments and exploring new places</p>
+            </div>
+            <div class="modal-body">
+                <div class="hobby-detail-grid">
+                    <div class="detail-section">
+                        <h3><i class="fas fa-images"></i> Photo Portfolio</h3>
+                        <div class="photo-gallery">
+                            <img src="assets/landscape1.JPG" alt="Nature">
+                            <img src="assets/landscape2.JPG" alt="Nature Photography">
+                            <img src="assets/landscape3.JPG" alt="Nature">
+                        </div>
+                        <p>A collection of spontaneous moments and carefully composed shots from my travels around China and the US.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3><i class="fas fa-globe"></i> Travel Progress</h3>
+                        <div class="travel-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-flag"></i>
+                                <span class="stat-number">30%</span>
+                                <span class="stat-label">of China Explored</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <span class="stat-number">5</span>
+                                <span class="stat-label">US States Visited</span>
+                            </div>
+                        </div>
+                        <p>Currently exploring the American Midwest while documenting cultural differences and similarities with my home country.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cooking & Baking Modal -->
+    <div id="cooking-modal" class="modal hobby-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('cooking-modal')">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-utensils"></i>
+                <h2>Cooking & Baking</h2>
+                <p>Creating healthy and delicious meals</p>
+            </div>
+            <div class="modal-body">
+                <div class="hobby-detail-grid">
+                    <div class="detail-section">
+                        <h3><i class="fas fa-apple-alt"></i> Healthy Recipe Development</h3>
+                        <p>I create nutritious meals tailored to my fitness goals, focusing on balanced macronutrients and whole ingredients. Most of my cooking revolves around meal prep for my training schedule, ensuring I get proper nutrition to support my workouts and research activities.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3><i class="fas fa-heart"></i> Baking for Family</h3>
+                        <p>I enjoy making homemade treats like cookies and pastries for my family, though I always try to use healthier ingredient substitutions when possible. It's become a way to show care while maintaining the delicious flavors everyone loves.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3><i class="fas fa-leaf"></i> Healthy Approach</h3>
+                        <p>Whether it's fitness meals or family desserts, I prioritize using natural ingredients and finding ways to make traditional recipes more nutritious without sacrificing taste. This hobby helps me maintain a healthy relationship with food while exploring creativity in the kitchen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
 </html>

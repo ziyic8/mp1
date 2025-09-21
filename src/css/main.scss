@@ -1,1 +1,2035 @@
-/* Your SCSS here. */
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+// Variables
+$primary-color: #6366f1;
+$secondary-color: #8b5cf6;
+$accent-color: #10b981;
+$text-color: #1f2937;
+$text-light: #6b7280;
+$white: #ffffff;
+$black: #000000;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+$section-padding: 100px 0;
+$container-max-width: 1200px;
+
+// Enhanced Breakpoints with specific fixes for 1024x768
+$mobile-small: 480px;
+$mobile: 768px;
+$tablet-small: 900px;
+$tablet: 1024px;
+$tablet-landscape: 1024px; // Specific fix for 1024x768
+$laptop: 1280px;
+$desktop: 1366px;
+$desktop-large: 1920px;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+@mixin button-style($bg: $primary-color, $color: $white) {
+  background: $bg;
+  color: $color;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  @include transition();
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba($bg, 0.3);
+  }
+}
+
+// Add better touch support and hover alternatives
+@mixin hover-touch {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+  
+  // For touch devices, use focus or active states
+  @media (hover: none) {
+    &:focus, &:active {
+      @content;
+    }
+  }
+}
+
+// Update card hover effects to work on touch devices
+@mixin card-style {
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  @include transition();
+  
+  @include hover-touch {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Responsive Font Size Mixin with better minimum sizes
+@mixin responsive-font($min-size, $max-size, $min-width: $mobile, $max-width: $desktop) {
+  font-size: clamp($min-size, calc(#{$min-size} + (#{$max-size} - #{$min-size}) * ((100vw - #{$min-width}) / (#{$max-width} - #{$min-width}))), $max-size);
+}
+
+// Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  color: $text-color;
+  overflow-x: hidden;
+  // Minimum font size for better readability
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+.container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 20px;
+  
+  @media (max-width: $mobile - 1px) {
+    padding: 0 15px;
+  }
+}
+
+.section {
+  padding: $section-padding;
+  min-height: 100vh;
+  @include flex-center;
+  flex-direction: column;
+  
+  @media (max-width: $tablet - 1px) {
+    padding: 80px 0;
+    min-height: auto;
+  }
+  
+  @media (max-width: $mobile - 1px) {
+    padding: 60px 0;
+  }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  
+  h2 {
+    @include responsive-font(2rem, 3rem);
+    font-weight: 700;
+    color: $text-color;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    @include responsive-font(1rem, 1.25rem);
+    color: $text-light;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+
+// Navigation
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid #e5e7eb;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  
+  &.scrolled {
+    height: 40px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    
+    .nav-logo {
+      font-size: 1.2rem;  
+    }
+    
+    .nav-menu a {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.nav-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1.5rem, 3vw, 1.75rem);
+  font-weight: 700;
+  color: #6366f1;
+  transition: all 0.3s ease;
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  i {
+    margin-right: 10px;
+    font-size: 1.5em;
+  }
+}
+
+// hamburger menu styles
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+  z-index: 1002;
+  position: relative;
+  justify-content: center; 
+  align-items: center; 
+  width: 30px;
+  height: 30px; 
+  
+  span {
+      width: 22px; 
+      height: 2px; 
+      background: #1f2937;
+      margin: 2px 0; 
+      transition: all 0.3s ease;
+      transform-origin: center; 
+      display: block;
+      border-radius: 1px;
+      position: relative; 
+    }
+  
+  &.active {
+      span:nth-child(1) {
+        transform: rotate(45deg) translate(0px, 6px); 
+      }
+      
+      span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0); 
+      }
+      
+      span:nth-child(3) {
+        transform: rotate(-45deg) translate(0px, -6px); 
+      }
+    }
+  }
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+  
+  @media (max-width: 1023px) {
+    gap: 20px;
+  }
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #1f2937;
+  font-weight: 500;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  
+  &:hover,
+  &.active {
+    color: #6366f1;
+  }
+
+  
+  &.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #6366f1;
+  }
+}
+// 移动端下拉菜单样式
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex !important;
+  }
+  
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px; 
+    max-height: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0;
+    transition: max-height 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    z-index: 1001;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0 0 8px 8px;
+    box-shadow: none;
+    border: none;
+    
+    &.active {
+      max-height: 250px; 
+      padding: 6px 0; 
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); 
+      border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+    }
+    
+    .nav-link {
+      font-size: 0.85rem !important;
+      font-weight: 500;
+      padding: 10px 18px; 
+      width: 100%;
+      color: #333;
+      transition: all 0.2s ease;
+      position: relative;
+      display: block;
+      line-height: 1.3; 
+      
+      &:hover {
+        color: #6366f1;
+        background-color: rgba(243, 244, 246, 0.8);
+      }
+      
+      &.active {
+        color: #6366f1;
+        background-color: rgba(239, 246, 255, 0.8);
+        
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+  
+  .nav-container {
+    padding: 0 15px;
+    position: relative;
+  }
+}
+
+// Home Section with Video Background
+.home-section {
+  position: relative;
+  color: $white;
+  text-align: center;
+  overflow: hidden;
+  min-height: 100vh;
+  @include flex-center;
+}
+
+.video-background-section {
+  position: relative;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  
+
+  @media (max-width: $mobile - 1px) {
+    object-position: center center;
+  }
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+              rgba($primary-color, 0.7) 0%, 
+              rgba($secondary-color, 0.7) 100%);
+  z-index: -1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+
+.hero-image {
+  margin-bottom: 30px;
+  
+  .profile-image {
+    width: clamp(120px, 25vw, 200px);
+    height: clamp(120px, 25vw, 200px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid rgba($white, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    @include transition();
+    
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.hero-title {
+  @include responsive-font(2rem, 4rem);
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  @include responsive-font(1.1rem, 1.5rem);
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.hero-description {
+  @include responsive-font(0.95rem, 1.1rem);
+  margin-bottom: 40px;
+  opacity: 0.8;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  @media (max-width: $mobile - 1px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.cta-button {
+  @include button-style();
+  @include responsive-font(1rem, 1.1rem);
+  padding: 15px 30px;
+  
+  &.primary {
+    background: $white;
+    color: $primary-color;
+  }
+  
+  i {
+    margin-left: 10px;
+    @include transition();
+  }
+  
+  &:hover i {
+    transform: translateX(5px);
+  }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+  
+  i {
+    font-size: 1.5rem;
+    opacity: 0.7;
+  }
+}
+
+// Enhanced Scroll Indicator with Hover Effect for fa-chevron-down
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+  cursor: pointer; 
+  @include transition();
+  
+  i {
+    font-size: 1.5rem;
+    opacity: 0.7;
+    @include transition(); 
+  }
+  
+  // 添加悬停效果
+  &:hover {
+    transform: translateX(-50%) scale(1.1);
+    
+    i {
+      opacity: 1;
+      color: $white;
+    }
+  }
+}
+
+// About Section with Fixed Background Image
+.about-section {
+  position: relative;
+  background: linear-gradient(rgba($white, 0.85), rgba($white, 0.85)),
+              url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  // Fallback for mobile devices that don't support background-attachment: fixed
+  @media (max-width: $mobile - 1px) {
+    background-attachment: scroll;
+  }
+  
+  // Add subtle parallax effect for desktop
+  @media (min-width: $tablet) {
+    background-attachment: fixed;
+  }
+  
+  // Additional overlay for better text readability
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+                rgba($primary-color, 0.05) 0%, 
+                rgba($white, 0.9) 50%, 
+                rgba($secondary-color, 0.05) 100%);
+    z-index: 1;
+  }
+  
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.about-content {
+  width: 100%;
+}
+
+// About Section with improved responsive grid
+.about-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 60px;
+  align-items: start;
+  
+  // Specific fix for 1024x768 landscape tablets
+  @media (max-width: $tablet-landscape) and (max-height: 768px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  @media (max-width: $tablet - 1px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.about-text {
+  h3 {
+    @include responsive-font(1.4rem, 2rem);
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    @include responsive-font(0.95rem, 1.1rem);
+    line-height: 1.8;
+    color: $text-light;
+    margin-bottom: 25px;
+    
+    // Better readability on 1024x768
+    @media (max-width: $tablet-landscape) and (max-height: 768px) {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+  }
+}
+
+.about-social {
+    margin-top: 30px;
+    
+    h4 {
+        @include responsive-font(1rem, 1.2rem);
+        color: $primary-color;
+        margin-bottom: 15px;
+    }
+    
+    .social-icons {
+        display: flex;
+        gap: 20px;
+        
+        .social-icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: $gray-100;
+            border-radius: 8px;
+            text-decoration: none;
+            color: $text-color;
+            @include transition();
+            
+            &:hover {
+                background: $primary-color;
+                color: $white;
+                transform: translateY(-2px);
+            }
+            
+            i {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+// Tech Stack Styles
+.tech-stack {
+  margin-top: 30px;
+  
+  h4 {
+    @include responsive-font(1rem, 1.2rem);
+    color: $primary-color;
+    margin-bottom: 15px;
+  }
+  
+  .tech-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .tech-icon {
+    display: inline-block;
+    padding: 6px 12px;
+    background: $gray-100;
+    border-radius: 20px;
+    @include responsive-font(0.75rem, 0.85rem);
+    font-weight: 500;
+    color: $text-color;
+    @include transition();
+    
+    &:hover {
+      background: $primary-color;
+      color: $white;
+      transform: translateY(-2px);
+    }
+    
+    // Specific colors for different technologies
+    &.python { border-left: 3px solid #3776ab; }
+    &.pytorch { border-left: 3px solid #ee4c2c; }
+    &.tensorflow { border-left: 3px solid #ff6f00; }
+    &.javascript { border-left: 3px solid #f7df1e; }
+    &.react { border-left: 3px solid #61dafb; }
+    &.node { border-left: 3px solid #339933; }
+    &.sql { border-left: 3px solid #336791; }
+    &.mongodb { border-left: 3px solid #47a248; }
+    &.git { border-left: 3px solid #f05032; }
+    &.docker { border-left: 3px solid #2496ed; }
+    &.aws { border-left: 3px solid #ff9900; }
+    &.linux { border-left: 3px solid #fcc624; }
+  }
+}
+
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  
+  @media (max-width: $tablet-small - 1px) {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  @include transition();
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  i {
+    font-size: 2.5rem;
+    color: $primary-color;
+    margin-bottom: 15px;
+    
+    @media (max-width: $mobile - 1px) {
+      font-size: 2rem;
+    }
+  }
+  
+  .stat-number {
+    display: block;
+    @include responsive-font(1.5rem, 2rem);
+    font-weight: 700;
+    color: $text-color;
+    margin-bottom: 5px;
+  }
+  
+  .stat-label {
+    color: $text-light;
+    font-weight: 500;
+    @include responsive-font(0.8rem, 0.9rem);
+  }
+}
+
+// Hobbies Section
+.hobbies-section {
+  background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($secondary-color, 0.05));
+}
+
+.hobbies-content {
+  width: 100%;
+}
+
+.hobbies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+  
+  @media (max-width: $laptop - 1px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: $mobile - 1px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+
+// Enhanced Hobby Cards with Click Interaction
+.hobby-card {
+  @include card-style;
+  text-align: center;
+  padding: 30px 20px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba($primary-color, 0.9), rgba($secondary-color, 0.9));
+    color: $white;
+    @include flex-center;
+    opacity: 0;
+    @include transition(all, 0.3s);
+    
+    span {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+  }
+  
+  &:hover .card-overlay {
+    opacity: 1;
+  }
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Hobby Modal Styles
+.hobby-modal {
+  .modal-content {
+    max-width: 900px;
+    max-height: 90vh;
+    
+    @media (max-width: $tablet - 1px) {
+      max-width: 95%;
+      margin: 20px;
+    }
+  }
+  
+  .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 40px 20px;
+    border-bottom: 2px solid $gray-100;
+    
+    i {
+      font-size: 3rem;
+      color: $primary-color;
+      margin-bottom: 15px;
+    }
+    
+    h2 {
+      margin-bottom: 10px;
+      color: $text-color;
+    }
+    
+    p {
+      color: $text-light;
+      margin: 0;
+    }
+  }
+  
+  .modal-body {
+    padding: 30px 40px 40px;
+    
+    @media (max-width: $tablet - 1px) {
+      padding: 25px 20px 30px;
+    }
+  }
+}
+
+// Hobby Detail Grid
+.hobby-detail-grid {
+  display: grid;
+  gap: 30px;
+  
+  .detail-section {
+    background: $gray-50;
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid $primary-color;
+    
+    h3 {
+      display: flex;
+      align-items: center;
+      @include responsive-font(1.1rem, 1.3rem);
+      color: $text-color;
+      margin-bottom: 20px;
+      
+      i {
+        color: $primary-color;
+        margin-right: 10px;
+        font-size: 1.2em;
+      }
+    }
+    
+    p {
+      color: $text-light;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// Image Gallery Styles
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+  
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    @include transition();
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  
+  @media (max-width: $mobile - 1px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    @include transition();
+    
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+
+.anime-list {
+  list-style: none;
+  padding: 0;
+  
+  li {
+    background: $white;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border-left: 3px solid $secondary-color;
+    @include transition();
+    
+    &:hover {
+      background: rgba($primary-color, 0.05);
+    }
+  }
+}
+
+// Video Container
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+}
+
+// Modal Sections
+.modal-section {
+  margin-bottom: 25px;
+  
+  h3 {
+    color: $primary-color;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+  }
+  
+  p {
+    color: $text-light;
+    line-height: 1.6;
+  }
+}
+
+// Modal Images
+.modal-images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+  
+  img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+
+.modal-single-image {
+  width: 100%;
+  max-width: 300px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Tags
+.anime-tags,
+.route-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  
+  span {
+    background: $gray-100;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    color: $text-color;
+  }
+}
+
+// Bike Specs
+.bike-specs {
+  p {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: $gray-50;
+    border-radius: 6px;
+    border-left: 3px solid $primary-color;
+    
+    strong {
+      color: $primary-color;
+    }
+  }
+}
+// Bike Info 
+.bike-info {
+  text-align: center;
+  
+  img {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    margin-bottom: 10px;
+    
+    strong {
+      color: $primary-color;
+    }
+  }
+}
+// Bike Specs 
+.bike-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  
+  span {
+    background: $gray-100;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: $text-color;
+    border-left: 3px solid $primary-color;
+    
+    &:hover {
+      background: rgba($primary-color, 0.1);
+    }
+  }
+}
+// Route List 
+.route-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.route-item {
+  background: $white;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid $accent-color;
+  
+  strong {
+    color: $primary-color;
+  }
+}
+// Travel Stats
+.travel-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 15px;
+  
+  .stat {
+    text-align: center;
+    padding: 15px;
+    background: $gray-50;
+    border-radius: 8px;
+    
+    .number {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $primary-color;
+    }
+    
+    .label {
+      font-size: 0.9rem;
+      color: $text-light;
+    }
+  }
+}
+
+
+// Enhanced Video Section for better mobile support
+.video-wrapper {
+  position: relative;
+  background: $white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  @include transition();
+  width: 100%;
+  
+  // Responsive aspect ratio
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; // 16:9 aspect ratio
+  }
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  }
+  
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 15px;
+    
+    &:focus {
+      outline: 3px solid $primary-color;
+      outline-offset: 2px;
+    }
+  }
+  
+  // Better mobile video controls
+  @media (max-width: $mobile - 1px) {
+    border-radius: 10px;
+    
+    video {
+      border-radius: 10px;
+    }
+  }
+}
+
+.video-info {
+  @include flex-center;
+  flex-direction: column;
+  text-align: left;
+  
+  @media (max-width: $tablet - 1px) {
+    text-align: center;
+  }
+  
+  h3 {
+    @include responsive-font(1.5rem, 2rem);
+    color: $text-color;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    @include responsive-font(1rem, 1.1rem);
+    color: $text-light;
+    line-height: 1.8;
+    margin-bottom: 30px;
+  }
+}
+
+
+// Education Section
+.education-section {
+  background: linear-gradient(135deg, rgba($accent-color, 0.05), rgba($primary-color, 0.05));
+  padding: 80px 0;
+}
+
+.education-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.edu-item {
+  background: $white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  @include transition();
+  
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  
+  @media (max-width: $tablet - 1px) {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 25px 20px;
+  }
+  
+  &.current-degree {
+    border-left: 5px solid $primary-color;
+    
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba($primary-color, 0.12);
+    }
+  }
+  
+  &.completed-degree {
+    border-left: 5px solid $accent-color;
+    
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba($accent-color, 0.12);
+    }
+  }
+}
+
+.edu-logo {
+  flex-shrink: 0;
+  
+  img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: rgba($gray-50, 0.8);
+    padding: 8px;
+    
+    @media (max-width: $mobile - 1px) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+.edu-info {
+  flex: 1;
+  
+  h3 {
+    @include responsive-font(1.3rem, 1.6rem);
+    font-weight: 700;
+    color: $text-color;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  
+  h4 {
+    @include responsive-font(1rem, 1.2rem);
+    font-weight: 600;
+    color: $primary-color;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  
+  .edu-duration {
+    @include responsive-font(0.85rem, 0.95rem);
+    color: $text-light;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  
+  .edu-gpa {
+    @include responsive-font(0.85rem, 0.95rem);
+    color: $text-color;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+}
+
+.edu-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  
+  @media (min-width: $tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.detail-section {
+  background: rgba($gray-50, 0.6);
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 3px solid $primary-color;
+  
+  h5 {
+    @include responsive-font(0.8rem, 0.9rem);
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  p {
+    @include responsive-font(0.8rem, 0.9rem);
+    color: $text-light;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+// Projects Section
+.projects-section {
+  background: $white;
+  padding: 80px 0;
+
+  
+  // Projects Section
+  .tech-projects {
+    margin-top: 60px;
+    
+    h3 {
+      @include responsive-font(2rem, 2.5rem);
+      font-weight: 700;
+      color: $text-color;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .projects-carousel-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .projects-carousel {
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .projects-slide {
+      display: none;
+      
+      &.active {
+        display: block;
+      }
+    }
+    
+    .project-card {
+      @include card-style;
+      padding: 40px;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      
+      @media (max-width: $mobile - 1px) {
+        padding: 30px 20px;
+        min-height: 350px;
+      }
+      
+      .project-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+        
+        @media (max-width: $mobile - 1px) {
+          flex-direction: column;
+          gap: 15px;
+        }
+        
+        i {
+          font-size: 4rem;
+          color: $primary-color;
+          margin-right: 20px;
+          @include transition();
+          
+          @media (max-width: $mobile - 1px) {
+            font-size: 3rem;
+            margin-right: 0;
+          }
+        }
+        
+        h4 {
+          @include responsive-font(1.3rem, 2rem);
+          color: $text-color;
+          margin: 0;
+        }
+      }
+      
+      p {
+        color: $text-light;
+        line-height: 1.7;
+        margin-bottom: 25px;
+        @include responsive-font(1rem, 1.1rem);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .project-tags {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 25px;
+        
+        .tag {
+          background: $primary-color;
+          color: $white;
+          padding: 8px 16px;
+          border-radius: 20px;
+          @include responsive-font(0.8rem, 0.9rem);
+          font-weight: 500;
+        }
+      }
+      
+      .project-features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        max-width: 500px;
+        margin: 0 auto;
+        
+        @media (max-width: $mobile - 1px) {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          @include responsive-font(0.8rem, 0.9rem);
+          color: $text-light;
+          padding: 8px 12px;
+          background: $gray-50;
+          border-radius: 8px;
+          @include transition();
+          
+          &:hover {
+            background: $gray-100;
+            color: $text-color;
+          }
+          
+          i {
+            color: $accent-color;
+            margin-right: 8px;
+            font-size: 0.8rem;
+          }
+        }
+      }
+      
+      &:hover {
+        .project-header i {
+          transform: scale(1.1);
+          color: $secondary-color;
+        }
+      }
+    }
+    
+    .projects-carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba($white, 0.95);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      @include flex-center;
+      @include transition();
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      
+      &:hover {
+        background: $white;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-50%) scale(1.1);
+      }
+      
+      i {
+        color: $text-color;
+        font-size: 1.2rem;
+      }
+      
+      &.prev {
+        left: -25px;
+        
+        @media (max-width: $laptop - 1px) {
+          left: -15px;
+        }
+        
+        @media (max-width: $tablet - 1px) {
+          left: 10px;
+        }
+      }
+      
+      &.next {
+        right: -25px;
+        
+        @media (max-width: $laptop - 1px) {
+          right: -15px;
+        }
+        
+        @media (max-width: $tablet - 1px) {
+          right: 10px;
+        }
+      }
+    }
+    
+    .projects-carousel-dots {
+      @include flex-center;
+      gap: 12px;
+      margin-top: 30px;
+      
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: $gray-200;
+        cursor: pointer;
+        @include transition();
+        
+        &.active {
+          background: $primary-color;
+          transform: scale(1.2);
+        }
+        
+        &:hover:not(.active) {
+          background: $gray-300;
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+// Contact Section
+.contact-section {
+  background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($secondary-color, 0.05));
+  padding: 80px 0;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  width: 100%;
+  
+  @media (max-width: $tablet - 1px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.contact-info {
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    
+    i {
+      font-size: 1.5rem;
+      color: $primary-color;
+      margin-right: 20px;
+      margin-top: 5px;
+    }
+    
+    h4 {
+      @include responsive-font(1rem, 1.1rem);
+      margin-bottom: 5px;
+      color: $text-color;
+    }
+    
+    p {
+      color: $text-light;
+      @include responsive-font(0.9rem, 1rem);
+    }
+  }
+  
+  .social-links {
+    @include flex-center;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 40px;
+    
+    .social-link {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: $gray-100;
+      @include flex-center;
+      color: $text-light;
+      text-decoration: none;
+      @include transition();
+      
+      &:hover {
+        background: $primary-color;
+        color: $white;
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+.contact-form {
+  .form-group {
+    margin-bottom: 20px;
+    
+    input,
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid $gray-200;
+      border-radius: 8px;
+      @include responsive-font(0.95rem, 1rem);
+      @include transition();
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+      }
+    }
+    
+    &:first-child {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      
+      @media (max-width: $mobile - 1px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+  
+  .submit-btn {
+    @include button-style();
+    @include responsive-font(0.95rem, 1rem);
+    width: 100%;
+    padding: 15px;
+    
+    i {
+      margin-left: 8px;
+    }
+  }
+}
+
+
+
+// Back to Top Button
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: $primary-color;
+  color: $white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  @include flex-center;
+  @include transition();
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 4px 15px rgba($primary-color, 0.3);
+  
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  &:hover {
+    background: $secondary-color;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba($primary-color, 0.4);
+  }
+  
+  i {
+    font-size: 1.2rem;
+  }
+  
+  @media (max-width: $mobile - 1px) {
+    width: 45px;
+    height: 45px;
+    bottom: 20px;
+    right: 20px;
+    
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+
+
+// Footer
+.footer {
+  background: $gray-900;
+  color: $white;
+  padding: 40px 0;
+  text-align: center;
+  
+  .footer-content {
+    @include flex-center;
+    flex-direction: column;
+    gap: 20px;
+    
+    .footer-logo {
+      @include flex-center;
+      @include responsive-font(1.25rem, 1.5rem);
+      font-weight: 700;
+      
+      i {
+        margin-right: 10px;
+        color: $primary-color;
+      }
+    }
+    
+    .footer-social {
+      @include flex-center;
+      gap: 20px;
+      
+      a {
+        color: $text-light;
+        font-size: 1.3rem;
+        @include transition();
+        
+        &:hover {
+          color: $primary-color;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+// Modals
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($black, 0.8);
+  backdrop-filter: blur(5px);
+  
+  &.show {
+    display: flex;
+    @include flex-center;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .modal-content {
+    background: $white;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideIn 0.3s ease;
+    
+    @media (max-width: $tablet - 1px) {
+      margin: 20px;
+      max-width: none;
+    }
+  }
+  
+  .modal-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: $text-light;
+    @include transition();
+    
+    &:hover {
+      color: $text-color;
+    }
+  }
+  
+  .modal-header {
+    padding: 40px 40px 20px;
+    text-align: center;
+    border-bottom: 1px solid $gray-200;
+    
+    @media (max-width: $tablet - 1px) {
+      padding: 30px 25px;
+    }
+    
+    h2 {
+      @include responsive-font(1.5rem, 1.8rem);
+      margin-bottom: 10px;
+      color: $text-color;
+    }
+    
+    p {
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+  
+  .modal-body {
+    padding: 30px 40px 40px;
+    
+    @media (max-width: $tablet - 1px) {
+      padding: 30px 25px;
+    }
+    
+    p {
+      line-height: 1.8;
+      color: $text-light;
+      margin-bottom: 20px;
+      @include responsive-font(0.95rem, 1rem);
+    }
+    
+    .modal-features {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 30px 0;
+      
+      .feature {
+        display: flex;
+        align-items: center;
+        
+        i {
+          color: $accent-color;
+          margin-right: 15px;
+          font-size: 1.2rem;
+        }
+        
+        span {
+          @include responsive-font(0.9rem, 1rem);
+        }
+      }
+    }
+    
+    .modal-btn {
+      @include button-style();
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  40% {
+    transform: translateY(-10px) translateX(-50%);
+  }
+  60% {
+    transform: translateY(-5px) translateX(-50%);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animation classes
+.animate-fade-in {
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.animate-slide-up {
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+.animate-bounce {
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+// Utility classes
+.fade-in-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+  
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// Print styles
+@media print {
+  .navbar,
+  .scroll-indicator,
+  .projects-carousel-btn,
+  .modal {
+    display: none !important;
+  }
+  
+  .section {
+    page-break-inside: avoid;
+    min-height: auto;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  * {
+    box-shadow: none !important;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .navbar {
+    background: $white;
+    border-bottom: 3px solid $black;
+  }
+  
+  .nav-link {
+    color: $black;
+    
+    &:hover,
+    &.active {
+      color: $primary-color;
+      background: rgba($primary-color, 0.1);
+    }
+  }
+  
+  .cta-button,
+  .submit-btn {
+    border: 2px solid currentColor;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .scroll-indicator {
+    animation: none;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
