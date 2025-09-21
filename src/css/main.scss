@@ -24,7 +24,6 @@ $mobile-small: 480px;
 $mobile: 768px;
 $tablet-small: 900px;
 $tablet: 1024px;
-$tablet-landscape: 1024px; // Specific fix for 1024x768
 $laptop: 1280px;
 $desktop: 1366px;
 $desktop-large: 1920px;
@@ -95,9 +94,16 @@ $desktop-large: 1920px;
 }
 
 // Responsive Font Size Mixin with better minimum sizes
-@mixin responsive-font($min-size, $max-size, $min-width: $mobile, $max-width: $desktop) {
+@mixin responsive-font($min-size, $max-size, $min-width: $mobile, $max-width: $desktop-large) {
   font-size: clamp($min-size, calc(#{$min-size} + (#{$max-size} - #{$min-size}) * ((100vw - #{$min-width}) / (#{$max-width} - #{$min-width}))), $max-size);
 }
+
+// Adaptive Container Mixin with better minimum sizes
+@mixin adaptive-container($base-width: 1000px, $scale-factor: 1.4) {
+  width: min(90vw, calc(#{$base-width} * #{$scale-factor}));
+  margin: 0 auto;
+}
+
 
 // Global Styles
 * {
@@ -171,7 +177,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  height: clamp(45px, 4vh, 60px); /* Responsive height */
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid #e5e7eb;
@@ -179,16 +185,8 @@ body {
   transition: all 0.3s ease;
   
   &.scrolled {
-    height: 40px;
+    height: clamp(40px, 3.5vh, 50px); /* Responsive scrolled height */
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    
-    .nav-logo {
-      font-size: 1.2rem;  
-    }
-    
-    .nav-menu a {
-      font-size: 0.8rem;
-    }
   }
 }
 
@@ -197,132 +195,255 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  
+  /* Responsive container width and padding */
+  width: min(95vw, 2200px);
+  padding: 0 clamp(15px, 3vw, 60px);
+  
+  /* Ensure proper spacing on different screen sizes */
+  @media (max-width: $mobile - 1px) {
+    padding: 0 15px;
+  }
+  
+  @media (min-width: $mobile) and (max-width: $tablet - 1px) {
+    padding: 0 20px;
+  }
+  
+  @media (min-width: $tablet) and (max-width: $laptop - 1px) {
+    padding: 0 25px;
+  }
+  
+  @media (min-width: $laptop) and (max-width: $desktop - 1px) {
+    padding: 0 30px;
+  }
+  
+  @media (min-width: $desktop) {
+    padding: 0 clamp(40px, 4vw, 80px);
+  }
 }
 
 .nav-logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(1.5rem, 3vw, 1.75rem);
   font-weight: 700;
   color: #6366f1;
   transition: all 0.3s ease;
   
+  /* Responsive font size for logo */
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  
+  /* Keep logo fixed position */
+  flex-shrink: 0; /* Prevent shrinking */
+  min-width: fit-content; /* Maintain minimum width */
+  
   a {
     color: inherit;
     text-decoration: none;
+    white-space: nowrap; /* Prevent name from wrapping */
   }
   
   i {
     margin-right: 10px;
-    font-size: 1.5em;
+    font-size: 1.2em;
+  }
+  
+  /* Responsive adjustments for scrolled state */
+  .navbar.scrolled & {
+    font-size: clamp(1rem, 2vw, 1.6rem);
   }
 }
-
-// hamburger menu styles
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 8px;
-  z-index: 1002;
-  position: relative;
-  justify-content: center; 
-  align-items: center; 
-  width: 30px;
-  height: 30px; 
-  
-  span {
-      width: 22px; 
-      height: 2px; 
-      background: #1f2937;
-      margin: 2px 0; 
-      transition: all 0.3s ease;
-      transform-origin: center; 
-      display: block;
-      border-radius: 1px;
-      position: relative; 
-    }
-  
-  &.active {
-      span:nth-child(1) {
-        transform: rotate(45deg) translate(0px, 6px); 
-      }
-      
-      span:nth-child(2) {
-        opacity: 0;
-        transform: scaleX(0); 
-      }
-      
-      span:nth-child(3) {
-        transform: rotate(-45deg) translate(0px, -6px); 
-      }
-    }
-  }
 
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 40px;
   margin: 0;
   padding: 0;
   
-  @media (max-width: 1023px) {
-    gap: 20px;
-  }
+  /* Responsive gap between menu items */
+  gap: clamp(15px, 3vw, 50px);
+
 }
 
 .nav-link {
   text-decoration: none;
   color: #1f2937;
   font-weight: 500;
-  font-size: clamp(0.9rem, 2vw, 1rem);
   position: relative;
   transition: all 0.3s ease;
   
-  &:focus {
-    outline: none;
-    box-shadow: none;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $primary-color;
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
+  /* Responsive font size for nav links */
+  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
   
-  &:hover,
-  &.active {
-    color: #6366f1;
-  }
-
-  
-  &.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
+  /* Mobile-specific styles */
+  @media (max-width: $mobile - 1px) {
+    font-size: 0.85rem !important;
+    font-weight: 500;
+    padding: 10px 18px;
     width: 100%;
-    height: 2px;
-    background: #6366f1;
+    color: #333;
+    transition: all 0.2s ease;
+    position: relative;
+    display: block;
+    line-height: 1.3;
+    
+    &:hover {
+      color: #6366f1;
+      background-color: rgba(243, 244, 246, 0.8);
+    }
+    
+    &.active {
+      color: #6366f1;
+      background-color: rgba(239, 246, 255, 0.8);
+      
+      &::after {
+        display: none;
+      }
+    }
+  }
+  
+  /* Desktop hover and active states */
+  @media (min-width: $mobile) {
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary-color;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    
+    &:hover,
+    &.active {
+      color: #6366f1;
+    }
+    
+    &.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #6366f1;
+    }
+  }
+  
+  /* Responsive adjustments for scrolled navbar */
+  .navbar.scrolled & {
+    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    
+    @media (max-width: $mobile - 1px) {
+      font-size: 0.8rem !important;
+    }
   }
 }
-// 移动端下拉菜单样式
-@media (max-width: 768px) {
-  .hamburger {
+
+/* Hamburger menu - responsive sizing */
+.hamburger {
+  display: none; 
+  flex-direction: column;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: clamp(6px, 1vw, 10px); 
+  z-index: 1002;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+  /* Adaptive sizing */
+  width: clamp(25px, 4vw, 35px);
+  height: clamp(25px, 4vw, 35px);
+
+  /* Show on mobile */
+  @media (max-width: $mobile - 1px) {
     display: flex !important;
   }
   
+  span {
+    width: clamp(18px, 3vw, 25px);
+    height: clamp(1.5px, 0.3vw, 2.5px);
+    background: #1f2937;
+    margin: clamp(1.5px, 0.3vw, 2.5px) 0;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    display: block;
+    border-radius: 1px;
+    position: relative;
+  }
+  
+  &.active {
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(0px, clamp(4px, 0.8vw, 7px));
+    }
+    
+    span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(0px, clamp(-4px, -0.8vw, -7px));
+    }
+  }
+
+  /* Different screen sizes */
+  // Small screens
+  @media (max-width: $mobile-small) {
+    width: 25px;
+    height: 25px;
+    padding: 6px;
+    
+    span {
+      width: 18px;
+      height: 1.5px;
+      margin: 1.5px 0;
+    }
+    
+    &.active {
+      span:nth-child(1) {
+        transform: rotate(45deg) translate(0px, 4px);
+      }
+      span:nth-child(3) {
+        transform: rotate(-45deg) translate(0px, -4px);
+      }
+    }
+  }
+
+  // Medium screens
+  @media (min-width: $mobile-small + 1px) and (max-width: $mobile - 1px) {
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    
+    span {
+      width: 22px;
+      height: 2px;
+      margin: 2px 0;
+    }
+    
+    &.active {
+      span:nth-child(1) {
+        transform: rotate(45deg) translate(0px, 6px);
+      }
+      span:nth-child(3) {
+        transform: rotate(-45deg) translate(0px, -6px);
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile - 1px) {
   .nav-menu {
     position: absolute;
     top: 100%;
     right: 0;
-    width: 200px; 
+
+    width: clamp(180px, 40vw, 220px);
     max-height: 0;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -334,27 +455,27 @@ body {
     z-index: 1001;
     padding: 0;
     overflow: hidden;
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 clamp(6px, 1vw, 10px) clamp(6px, 1vw, 10px);
     box-shadow: none;
     border: none;
     
     &.active {
-      max-height: 250px; 
-      padding: 6px 0; 
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); 
+      max-height: clamp(220px, 50vh, 280px); 
+      padding: clamp(4px, 1vw, 8px) 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
       border-bottom: 1px solid rgba(229, 231, 235, 0.6);
     }
     
     .nav-link {
-      font-size: 0.85rem !important;
+      font-size: clamp(0.8rem, 2vw, 0.9rem) !important;
       font-weight: 500;
-      padding: 10px 18px; 
+      padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 20px);
       width: 100%;
       color: #333;
       transition: all 0.2s ease;
       position: relative;
       display: block;
-      line-height: 1.3; 
+      line-height: 1.3;
       
       &:hover {
         color: #6366f1;
@@ -373,7 +494,7 @@ body {
   }
   
   .nav-container {
-    padding: 0 15px;
+    padding: 0 clamp(12px, 3vw, 20px);
     position: relative;
   }
 }
@@ -497,18 +618,6 @@ body {
   }
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: bounce 2s infinite;
-  
-  i {
-    font-size: 1.5rem;
-    opacity: 0.7;
-  }
-}
 
 // Enhanced Scroll Indicator with Hover Effect for fa-chevron-down
 .scroll-indicator {
@@ -526,7 +635,7 @@ body {
     @include transition(); 
   }
   
-  // 添加悬停效果
+  // Add hover effect for devices that support hover
   &:hover {
     transform: translateX(-50%) scale(1.1);
     
@@ -590,7 +699,7 @@ body {
   align-items: start;
   
   // Specific fix for 1024x768 landscape tablets
-  @media (max-width: $tablet-landscape) and (max-height: 768px) {
+  @media (max-width: $tablet) and (max-height: 768px) {
     grid-template-columns: 1fr;
     gap: 30px;
   }
@@ -614,11 +723,11 @@ body {
     color: $text-light;
     margin-bottom: 25px;
     
-    // Better readability on 1024x768
-    @media (max-width: $tablet-landscape) and (max-height: 768px) {
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
+    // // Better readability on 1024x768
+    // @media (max-width: $tablet) and (max-height: 768px) {
+    //   font-size: 0.9rem;
+    //   line-height: 1.6;
+    // }
   }
 }
 
@@ -792,6 +901,17 @@ body {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+
+  .hobby-icon {
+  @include flex-center;
+  margin-bottom: 20px;
+  
+  i {
+    font-size: 3rem;
+    color: $primary-color;
+    @include transition();
+  }
+}
   
   .card-overlay {
     position: absolute;
@@ -1044,20 +1164,6 @@ body {
   }
 }
 
-// Bike Specs
-.bike-specs {
-  p {
-    margin-bottom: 8px;
-    padding: 8px 12px;
-    background: $gray-50;
-    border-radius: 6px;
-    border-left: 3px solid $primary-color;
-    
-    strong {
-      color: $primary-color;
-    }
-  }
-}
 // Bike Info 
 .bike-info {
   text-align: center;
@@ -1085,20 +1191,13 @@ body {
   flex-direction: column;
   gap: 8px;
   text-align: left;
-  
-  span {
-    background: $gray-100;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    color: $text-color;
-    border-left: 3px solid $primary-color;
+
     
     &:hover {
       background: rgba($primary-color, 0.1);
     }
   }
-}
+
 // Route List 
 .route-list {
   display: flex;
@@ -1224,8 +1323,7 @@ body {
 }
 
 .education-wrapper {
-  max-width: 1000px;
-  margin: 0 auto;
+  @include adaptive-container(1000px, 1.4); // max 1400px
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -1372,10 +1470,9 @@ body {
     }
     
     .projects-carousel-container {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-    }
+    position: relative;
+    @include adaptive-container(900px, 1.33); // max 1200px
+  }
     
     .projects-carousel {
       overflow: hidden;
@@ -1590,17 +1687,21 @@ body {
   padding: 80px 0;
 }
 
+
+
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: clamp(40px, 6vw, 100px); // adaptive gap
   width: 100%;
+  @include adaptive-container(1000px, 1.4); // max 1400px
   
   @media (max-width: $tablet - 1px) {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 }
+
 
 .contact-info {
   .contact-item {
@@ -2032,4 +2133,455 @@ body {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Complete Responsive Adjustments - Replace your existing resolution blocks */
+
+/* 1024x768 (Standard Tablet Landscape) */
+@media (max-width: $tablet) and (min-width: $tablet-small + 1px) {
+  /* Navbar */
+  .navbar {
+    height: clamp(42px, 4vh, 48px);
+    &.scrolled { height: clamp(38px, 3.5vh, 44px); }
+  }
+  
+  .nav-container { padding: 0 20px; }
+  .nav-menu { gap: clamp(15px, 3vw, 25px); }
+  .nav-link { font-size: clamp(0.8rem, 1.8vw, 0.95rem); }
+  
+  /* Layout */
+  .section { padding: 60px 0; min-height: auto; }
+  .container { padding: 0 20px; }
+  
+  /* Typography */
+  .hero-title { font-size: clamp(2.2rem, 4vw, 2.8rem); }
+  .section-header {
+    margin-bottom: 40px;
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.2rem); }
+    p { font-size: clamp(0.9rem, 2vw, 1.1rem); }
+  }
+  
+  /* About section */
+  .about-grid { grid-template-columns: 1fr; gap: clamp(25px, 4vw, 35px); }
+  .about-text {
+    h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+    p { font-size: clamp(0.85rem, 1.8vw, 1rem); line-height: 1.6; }
+  }
+  .about-social h4 { font-size: clamp(0.95rem, 2vw, 1.1rem); }
+  .tech-stack h4 { font-size: clamp(0.95rem, 2vw, 1.1rem); }
+  .tech-icon { font-size: clamp(0.7rem, 1.5vw, 0.8rem); }
+  
+  /* Stats */
+  .about-stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .stat-item {
+    padding: 15px;
+    i { font-size: clamp(1.8rem, 3vw, 2.2rem); }
+    .stat-number { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+    .stat-label { font-size: clamp(0.75rem, 1.5vw, 0.85rem); }
+  }
+  
+  /* Hobbies - 4 column layout */
+  .hobbies-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; }
+  .hobby-card {
+    padding: 18px 12px;
+    .hobby-icon i { font-size: clamp(2rem, 3vw, 2.4rem); margin-bottom: 15px; }
+    h4 { font-size: clamp(0.85rem, 1.8vw, 1rem); margin-bottom: 10px; }
+    p { font-size: clamp(0.7rem, 1.5vw, 0.8rem); line-height: 1.4; }
+    .card-overlay span { font-size: clamp(0.85rem, 1.8vw, 1rem); }
+  }
+  
+  /* Education */
+  .edu-item {
+    padding: 20px; gap: 15px;
+    h3 { font-size: clamp(1.1rem, 2.2vw, 1.3rem); }
+    h4 { font-size: clamp(0.9rem, 1.8vw, 1.1rem); }
+    .edu-duration, .edu-gpa { font-size: clamp(0.8rem, 1.6vw, 0.9rem); }
+  }
+  .edu-logo img { width: clamp(55px, 8vw, 65px); height: clamp(55px, 8vw, 65px); }
+  
+  /* Projects */
+  .project-card {
+    padding: 25px; min-height: 300px;
+    .project-header {
+      margin-bottom: 20px;
+      i { font-size: clamp(2.2rem, 4vw, 2.8rem); }
+      h4 { font-size: clamp(1.2rem, 2.5vw, 1.4rem); }
+    }
+    p { font-size: clamp(0.85rem, 1.8vw, 1rem); }
+    .project-tags .tag { font-size: clamp(0.75rem, 1.5vw, 0.85rem); }
+    .project-features span { font-size: clamp(0.75rem, 1.5vw, 0.85rem); }
+  }
+  .projects-carousel-btn {
+    width: clamp(35px, 6vw, 42px); height: clamp(35px, 6vw, 42px);
+    &.prev { left: 5px; } &.next { right: 5px; }
+    i { font-size: clamp(0.9rem, 1.8vw, 1.1rem); }
+  }
+  
+  /* Contact */
+  .contact-content { grid-template-columns: 1fr; gap: 30px; }
+  .contact-info {
+    .contact-item {
+      i { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+      h4 { font-size: clamp(0.9rem, 1.8vw, 1.1rem); }
+      p { font-size: clamp(0.85rem, 1.7vw, 1rem); }
+    }
+  }
+  .contact-form {
+    input, textarea { font-size: clamp(0.85rem, 1.7vw, 1rem); }
+    .submit-btn { font-size: clamp(0.85rem, 1.7vw, 1rem); }
+  }
+}
+
+/* 1280x720 (HD Ready Laptop) */
+@media (min-width: $tablet + 1px) and (max-width: $laptop) {
+  /* Navbar */
+  .navbar {
+    height: clamp(45px, 4.5vh, 55px);
+    &.scrolled { height: clamp(42px, 4vh, 50px); }
+  }
+  
+  .nav-container { padding: 0 25px; }
+  .nav-menu { gap: clamp(22px, 3vw, 30px); }
+  .nav-link { font-size: clamp(0.85rem, 1.5vw, 1rem); }
+  
+  /* Layout */
+  .section { padding: 75px 0; }
+  .container { padding: 0 25px; }
+  
+  /* Typography */
+  .hero-title { font-size: clamp(2.8rem, 4.5vw, 3.5rem); }
+  .section-header h2 { font-size: clamp(2.2rem, 3.8vw, 2.8rem); }
+  .section-header p { font-size: clamp(1.1rem, 1.8vw, 1.3rem); }
+  
+  /* About section */
+  .about-grid { gap: clamp(40px, 5vw, 50px); }
+  .about-text {
+    h3 { font-size: clamp(1.6rem, 2.8vw, 1.9rem); }
+    p { font-size: clamp(1rem, 1.8vw, 1.2rem); line-height: 1.7; }
+  }
+  .about-social h4 { font-size: clamp(1.1rem, 1.8vw, 1.3rem); }
+  .tech-stack h4 { font-size: clamp(1.1rem, 1.8vw, 1.3rem); }
+  .tech-icon { font-size: clamp(0.8rem, 1.5vw, 0.9rem); }
+  
+  /* Stats */
+  .stat-item {
+    padding: clamp(18px, 2.5vw, 22px);
+    i { font-size: clamp(2.2rem, 3.5vw, 2.6rem); }
+    .stat-number { font-size: clamp(1.6rem, 2.8vw, 1.9rem); }
+    .stat-label { font-size: clamp(0.85rem, 1.5vw, 0.95rem); }
+  }
+  
+  /* Hobbies - 4 column layout */
+  .hobbies-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .hobby-card {
+    padding: 20px 15px;
+    .hobby-icon i { font-size: clamp(2.3rem, 3.2vw, 2.7rem); margin-bottom: 15px; }
+    h4 { font-size: clamp(0.95rem, 1.7vw, 1.1rem); margin-bottom: 12px; }
+    p { font-size: clamp(0.75rem, 1.4vw, 0.85rem); line-height: 1.5; }
+    .card-overlay span { font-size: clamp(0.95rem, 1.7vw, 1.1rem); }
+  }
+  
+  /* Education */
+  .edu-item {
+    padding: 25px; gap: 20px;
+    h3 { font-size: clamp(1.3rem, 2.3vw, 1.6rem); }
+    h4 { font-size: clamp(1.1rem, 1.9vw, 1.3rem); }
+    .edu-duration, .edu-gpa { font-size: clamp(0.9rem, 1.6vw, 1rem); }
+  }
+  .edu-logo img { width: clamp(65px, 7vw, 75px); height: clamp(65px, 7vw, 75px); }
+  
+  /* Projects */
+  .project-card {
+    padding: 35px; min-height: 380px;
+    .project-header i { font-size: clamp(3.2rem, 4.5vw, 3.8rem); }
+    .project-header h4 { font-size: clamp(1.4rem, 2.3vw, 1.7rem); }
+    p { font-size: clamp(1rem, 1.7vw, 1.2rem); }
+    .project-tags .tag { font-size: clamp(0.85rem, 1.5vw, 0.95rem); }
+    .project-features span { font-size: clamp(0.85rem, 1.5vw, 0.95rem); }
+  }
+  .projects-carousel-btn {
+    &.prev { left: -15px; } &.next { right: -15px; }
+  }
+  
+  /* Contact */
+  .contact-content { gap: clamp(45px, 5vw, 55px); }
+  .contact-info {
+    .contact-item {
+      i { font-size: clamp(1.4rem, 2.2vw, 1.7rem); }
+      h4 { font-size: clamp(1rem, 1.7vw, 1.2rem); }
+      p { font-size: clamp(0.9rem, 1.5vw, 1.1rem); }
+    }
+  }
+  .contact-form {
+    input, textarea { font-size: clamp(0.9rem, 1.5vw, 1.1rem); }
+    .submit-btn { font-size: clamp(0.9rem, 1.5vw, 1.1rem); }
+  }
+}
+
+/* 1366x768 (Standard Desktop) */
+@media (min-width: $laptop + 1px) and (max-width: $desktop) {
+  /* Navbar */
+  .navbar {
+    height: clamp(48px, 4.8vh, 58px);
+    &.scrolled { height: clamp(44px, 4.2vh, 52px); }
+  }
+  
+  .nav-container { padding: 0 30px; }
+  .nav-menu { gap: clamp(25px, 2.8vw, 35px); }
+  .nav-link { font-size: clamp(0.9rem, 1.3vw, 1.05rem); }
+  
+  /* Layout */
+  .container { padding: 0 30px; }
+  
+  /* Typography */
+  .hero-title { font-size: clamp(3.2rem, 4.2vw, 3.8rem); }
+  .section-header h2 { font-size: clamp(2.5rem, 3.5vw, 3rem); }
+  .section-header p { font-size: clamp(1.15rem, 1.6vw, 1.35rem); }
+  
+  /* About section */
+  .about-grid { gap: clamp(50px, 5vw, 60px); }
+  .about-text {
+    h3 { font-size: clamp(1.7rem, 2.5vw, 2rem); }
+    p { font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.7; }
+  }
+  .about-social h4 { font-size: clamp(1.15rem, 1.6vw, 1.3rem); }
+  .tech-stack h4 { font-size: clamp(1.15rem, 1.6vw, 1.3rem); }
+  .tech-icon { font-size: clamp(0.82rem, 1.2vw, 0.92rem); }
+  
+  /* Stats */
+  .stat-item {
+    padding: clamp(20px, 2.5vw, 25px);
+    i { font-size: clamp(2.4rem, 3.2vw, 2.8rem); }
+    .stat-number { font-size: clamp(1.7rem, 2.5vw, 2rem); }
+    .stat-label { font-size: clamp(0.87rem, 1.3vw, 0.97rem); }
+  }
+  
+  /* Hobbies - 4 column layout */
+  .hobbies-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
+  .hobby-card {
+    padding: 22px 18px;
+    .hobby-icon i { font-size: clamp(2.6rem, 3vw, 3rem); margin-bottom: 18px; }
+    h4 { font-size: clamp(1.05rem, 1.5vw, 1.2rem); margin-bottom: 15px; }
+    p { font-size: clamp(0.82rem, 1.2vw, 0.92rem); line-height: 1.6; }
+    .card-overlay span { font-size: clamp(1.05rem, 1.5vw, 1.2rem); }
+  }
+  
+  /* Education */
+  .edu-item {
+    padding: 28px; gap: 22px;
+    h3 { font-size: clamp(1.5rem, 2.2vw, 1.7rem); }
+    h4 { font-size: clamp(1.2rem, 1.7vw, 1.4rem); }
+    .edu-duration, .edu-gpa { font-size: clamp(0.95rem, 1.4vw, 1.05rem); }
+  }
+  .edu-logo img { width: clamp(68px, 6vw, 78px); height: clamp(68px, 6vw, 78px); }
+  
+  /* Projects */
+  .project-card {
+    padding: 38px; min-height: 390px;
+    .project-header i { font-size: clamp(3.5rem, 4.2vw, 4rem); }
+    .project-header h4 { font-size: clamp(1.6rem, 2.2vw, 1.9rem); }
+    p { font-size: clamp(1.05rem, 1.5vw, 1.25rem); }
+    .project-tags .tag { font-size: clamp(0.9rem, 1.3vw, 1rem); }
+    .project-features span { font-size: clamp(0.9rem, 1.3vw, 1rem); }
+  }
+  .projects-carousel-btn {
+    &.prev { left: -20px; } &.next { right: -20px; }
+  }
+  
+  /* Contact */
+  .contact-content { gap: clamp(55px, 5.5vw, 65px); }
+  .contact-info {
+    .contact-item {
+      i { font-size: clamp(1.5rem, 2vw, 1.8rem); }
+      h4 { font-size: clamp(1.05rem, 1.5vw, 1.25rem); }
+      p { font-size: clamp(0.95rem, 1.4vw, 1.15rem); }
+    }
+  }
+  .contact-form {
+    input, textarea { font-size: clamp(0.95rem, 1.4vw, 1.15rem); }
+    .submit-btn { font-size: clamp(0.95rem, 1.4vw, 1.15rem); }
+  }
+}
+
+/* 1920x1080+ (Large Desktop) */
+@media (min-width: $desktop + 1px) {
+  /* Navbar */
+  .navbar {
+    height: clamp(55px, 5vh, 75px);
+    &.scrolled { height: clamp(50px, 4.5vh, 65px); }
+  }
+  
+  .nav-container {
+    max-width: 1600px;
+    padding: 0 clamp(40px, 3vw, 70px);
+  }
+  .nav-menu { gap: clamp(35px, 2.5vw, 55px); }
+  .nav-link { font-size: clamp(1rem, 1.2vw, 1.4rem); }
+  
+  /* Enhanced large screen layout */
+  .container {
+    max-width: 1600px;
+    padding: 0 clamp(40px, 3vw, 70px);
+  }
+  .section { padding: clamp(100px, 8vh, 140px) 0; }
+  
+  /* Typography */
+  .hero-title { font-size: clamp(4.2rem, 5vw, 6rem); }
+  .section-header {
+    margin-bottom: clamp(80px, 6vh, 100px);
+    h2 { font-size: clamp(3.2rem, 4vw, 5rem); }
+    p { 
+      font-size: clamp(1.3rem, 1.5vw, 1.8rem);
+      max-width: clamp(700px, 50vw, 900px);
+    }
+  }
+  
+  /* About section */
+  .about-grid { gap: clamp(70px, 6vw, 120px); }
+  .about-text {
+    h3 { font-size: clamp(1.8rem, 2.2vw, 2.6rem); }
+    p { 
+      font-size: clamp(1.1rem, 1.3vw, 1.6rem);
+      line-height: 1.8;
+    }
+  }
+  .about-social {
+    h4 { font-size: clamp(1.2rem, 1.4vw, 1.7rem); }
+    .social-icon {
+      padding: clamp(15px, 1.5vw, 22px) clamp(20px, 2vw, 28px);
+      font-size: clamp(1rem, 1.1vw, 1.4rem);
+    }
+  }
+  .tech-stack {
+    h4 { font-size: clamp(1.2rem, 1.4vw, 1.7rem); }
+    .tech-icon {
+      padding: clamp(8px, 1vw, 14px) clamp(15px, 1.5vw, 22px);
+      font-size: clamp(0.9rem, 1vw, 1.2rem);
+    }
+  }
+  
+  /* Stats */
+  .stat-item {
+    padding: clamp(25px, 2.5vw, 40px);
+    i { font-size: clamp(3rem, 3vw, 4.5rem); }
+    .stat-number { font-size: clamp(2.2rem, 2.5vw, 3.5rem); }
+    .stat-label { font-size: clamp(0.9rem, 1vw, 1.3rem); }
+  }
+  
+  /* Hobbies */
+  .hobbies-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(35px, 3vw, 60px);
+  }
+  .hobby-card {
+    padding: clamp(25px, 2.5vw, 40px);
+    .hobby-icon i { font-size: clamp(3rem, 3vw, 4.5rem); margin-bottom: 20px; }
+    h4 { font-size: clamp(1.2rem, 1.5vw, 1.8rem); margin-bottom: 15px; }
+    p { font-size: clamp(0.9rem, 1vw, 1.3rem); line-height: 1.6; }
+    .card-overlay span { font-size: clamp(1.1rem, 1.3vw, 1.5rem); }
+  }
+  
+  /* Education */
+  .edu-item {
+    padding: clamp(35px, 3vw, 50px);
+    gap: clamp(28px, 2.5vw, 40px);
+    h3 { font-size: clamp(1.6rem, 2vw, 2.4rem); }
+    h4 { font-size: clamp(1.3rem, 1.5vw, 1.9rem); }
+    .edu-duration, .edu-gpa { font-size: clamp(1rem, 1.1vw, 1.4rem); }
+    .detail-section {
+      h5 { font-size: clamp(1rem, 1.1vw, 1.3rem); }
+      p { font-size: clamp(1rem, 1.1vw, 1.3rem); }
+    }
+  }
+  .edu-logo img {
+    width: clamp(70px, 6vw, 100px);
+    height: clamp(70px, 6vw, 100px);
+  }
+  
+  /* Projects */
+  .project-card {
+    padding: clamp(45px, 4vw, 70px);
+    min-height: clamp(420px, 30vh, 550px);
+    .project-header {
+      i { font-size: clamp(4.5rem, 5vw, 7rem); }
+      h4 { font-size: clamp(2rem, 2.5vw, 3.2rem); }
+    }
+    p { 
+      font-size: clamp(1.1rem, 1.2vw, 1.6rem);
+      line-height: 1.8;
+    }
+    .project-tags .tag { 
+      padding: clamp(10px, 1vw, 16px) clamp(18px, 1.5vw, 26px);
+      font-size: clamp(1rem, 1.1vw, 1.4rem);
+    }
+    .project-features {
+      max-width: clamp(500px, 40vw, 700px);
+      gap: clamp(15px, 1.5vw, 25px);
+      span {
+        padding: clamp(10px, 1vw, 16px) clamp(14px, 1.2vw, 22px);
+        font-size: clamp(1rem, 1.1vw, 1.4rem);
+      }
+    }
+  }
+  .projects-carousel-btn {
+    &.prev { left: clamp(-30px, -2vw, -15px); }
+    &.next { right: clamp(-30px, -2vw, -15px); }
+  }
+  
+  /* Contact */
+  .contact-content { gap: clamp(60px, 6vw, 120px); }
+  .contact-info {
+    .contact-item {
+      margin-bottom: clamp(30px, 3vw, 50px);
+      i { font-size: clamp(1.5rem, 1.8vw, 2.4rem); }
+      h4 { font-size: clamp(1.1rem, 1.3vw, 1.7rem); }
+      p { font-size: clamp(1rem, 1.1vw, 1.5rem); }
+    }
+    .social-links {
+      gap: clamp(15px, 1.5vw, 25px);
+      .social-link {
+        width: clamp(45px, 4vw, 70px);
+        height: clamp(45px, 4vw, 70px);
+        font-size: clamp(1.2rem, 1.5vw, 2rem);
+      }
+    }
+  }
+  .contact-form {
+    .form-group {
+      margin-bottom: clamp(20px, 2vw, 30px);
+      input, textarea {
+        padding: clamp(15px, 1.5vw, 24px);
+        font-size: clamp(1rem, 1.1vw, 1.4rem);
+      }
+    }
+    .submit-btn {
+      padding: clamp(15px, 1.5vw, 24px);
+      font-size: clamp(1rem, 1.1vw, 1.4rem);
+    }
+  }
+  
+  /* Footer */
+  .footer {
+    padding: clamp(40px, 4vh, 70px) 0;
+    .footer-content {
+      gap: clamp(20px, 2vh, 40px);
+      .footer-logo { font-size: clamp(1.5rem, 1.8vw, 2.4rem); }
+      .footer-social a { font-size: clamp(1.3rem, 1.5vw, 2rem); }
+    }
+  }
+}
+
+/* Ultra-wide screens (1920px+) */
+@media (min-width: $desktop-large) {
+  .container {
+    max-width: min(95vw, 2200px);
+    padding: 0 clamp(50px, 4vw, 120px);
+  }
+  
+  .nav-container {
+    max-width: min(95vw, 2200px);
+    padding: 0 clamp(50px, 4vw, 120px);
+  }
+  
+  .section { padding: clamp(120px, 10vh, 180px) 0; }
 }
