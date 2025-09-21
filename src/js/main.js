@@ -805,16 +805,5 @@ function handleFormSubmit(e) {
     return false;
 }
 
-/**
- * Initialize all enhancements
- */
-
-
-// Initialize enhancements when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initEnhancements);
-} else {
-    initEnhancements();
-}
 
 console.log('Ziyi Chen Portfolio - All scripts loaded successfully with enhanced features!');
